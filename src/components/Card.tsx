@@ -74,7 +74,8 @@ const Card = ({ paper, onSelect, isSelected }: CardProps) => {
           alt={paper.subject}
           width={320}
           height={180}
-          className="w-full object-cover p-4 pb-3 md:h-[250px]"
+
+          className="h-[160px] w-full object-cover p-4 pb-3 md:h-[250px]"
         />
 
         <div className="justify-center">

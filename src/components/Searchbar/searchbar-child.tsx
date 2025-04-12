@@ -18,7 +18,7 @@ function SearchBarChild({ initialSubjects }: { initialSubjects: string[] }) {
 
     if (text.length > 1 && subjects.length > 0) {
       const filteredSuggestions = subjects.filter((subject) =>
-        subject.toLowerCase().includes(text.toLowerCase()),
+        subject.toLowerCase().includes(text.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
     } else {
@@ -64,7 +64,9 @@ function SearchBarChild({ initialSubjects }: { initialSubjects: string[] }) {
             value={searchText}
             onChange={handleSearchChange}
             placeholder="Search by subject..."
-            className={`text-md play rounded-lg bg-[#B2B8FF] px-4 py-6 pr-10 font-sans tracking-wider text-black shadow-sm placeholder:text-black focus:outline-none focus:ring-2 dark:bg-[#7480FF66] dark:text-white placeholder:dark:text-white ${searchText.length > 1 ? "rounded-b-none" : ""}`}
+            className={`text-md play rounded-lg bg-[#B2B8FF] px-4 py-6 pr-10 font-sans tracking-wider text-black shadow-sm placeholder:text-black focus:outline-none focus:ring-2 dark:bg-[#7480FF66] dark:text-white placeholder:dark:text-white ${
+              searchText.length > 1 ? "rounded-b-none" : ""
+            }`}
           />
           <button
             type="submit"
@@ -72,23 +74,26 @@ function SearchBarChild({ initialSubjects }: { initialSubjects: string[] }) {
           >
             <Search className="h-5 w-5 text-black dark:text-white" />
           </button>
-          {(suggestions.length > 0 ||
-            (searchText.length > 1 && subjects.length > 0)) && (
+
+          {suggestions.length > 0 && (
             <ul
               ref={suggestionsRef}
-              className="absolute z-20 h-[250px] w-full max-w-xl overflow-y-scroll rounded-md rounded-t-none border border-t-0 bg-white text-center shadow-lg dark:bg-[#303771] md:mx-0 md:h-auto md:overflow-auto"
+              role="listbox"
+              aria-label="Search suggestions"
+              className="absolute z-20 mx-0.5 mt-2 w-full max-w-xl rounded-md bg-white text-center shadow-lg dark:bg-[#030712] md:mx-0"
             >
-              {suggestions.length > 0 ? (
-                suggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleSelectSuggestion(suggestion)}
-                    className="cursor-pointer truncate p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    {suggestion}
-                  </li>
-                ))
-              ) : (
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  role="option"
+                  aria-selected={false}
+                  onClick={() => handleSelectSuggestion(suggestion)}
+                  className="cursor-pointer truncate p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  {suggestion}
+                </li>
+              ))}
+              {suggestions.length === 0 && (
                 <li className="p-2 text-gray-500 dark:text-gray-400">
                   No subjects found
                 </li>
